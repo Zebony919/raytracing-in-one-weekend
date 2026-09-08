@@ -1,19 +1,38 @@
 #include <iostream>
 #include <fstream>
 
+#include <cmath>
 #include "vec3.h"
 #include "color.h"
 #include "ray.h"
 
+bool hit_sphere(const point3& center, const double radius, const ray& r) {
+    vec3 oc = center - r.origin();
+    double a = dot(r.direction(), r.direction());
+    double b = -2.0 * dot((r.direction()), oc);
+    double c = dot(oc, oc) - radius * radius;
+    auto discriminant = b * b - (4 * a * c);
+
+    // Not needed but cool to see in rendering
+    // t1 represents the intersection at the back of the sphere
+    // t2 represents the intersection at the front of the sphere
+    auto t1 = (-b + std::sqrt(discriminant)) / (2 * a);
+    auto t2 = (-b - std::sqrt(discriminant)) / (2 * a);
+
+    return (discriminant >= 0);
+}
+
 color ray_color(const ray& r) {
-    // Learn this
+    if (hit_sphere(vec3(0, 0, -1), 0.5, r)) {
+        return color(1, 0, 0);
+    }
+
     vec3 unit_direction = unit_vector(r.direction());
     auto a = 0.5 * (unit_direction.y() + 1.0);
     return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0);
 }
 
 int main() {
-    //Learn why all these dimensions
     // Image Dimensions
     auto aspect_ratio = 16.0 / 9.0;
     int image_width = 400;
@@ -52,7 +71,6 @@ int main() {
         // Progress update for rendering
         std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
 
-        // Learn this
         for (int i = 0; i < image_width; i++) {
             auto pixel_center = pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
             auto ray_direction = pixel_center - camera_center;
