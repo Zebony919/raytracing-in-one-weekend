@@ -368,6 +368,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\Playtech\Documents\Visual Studio Projects\raytracing-in-one-weekend\src\InOneWeekend\vec3.h" />
     <ClInclude Include="C:\Users\Playtech\Documents\Visual Studio Projects\raytracing-in-one-weekend\src\InOneWeekend\color.h" />
     <ClInclude Include="C:\Users\Playtech\Documents\Visual Studio Projects\raytracing-in-one-weekend\src\InOneWeekend\ray.h" />
+    <ClInclude Include="C:\Users\Playtech\Documents\Visual Studio Projects\raytracing-in-one-weekend\src\InOneWeekend\hittable.h" />
+    <ClInclude Include="C:\Users\Playtech\Documents\Visual Studio Projects\raytracing-in-one-weekend\src\InOneWeekend\sphere.h" />
+    <ClInclude Include="C:\Users\Playtech\Documents\Visual Studio Projects\raytracing-in-one-weekend\src\InOneWeekend\rtweekend.h" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

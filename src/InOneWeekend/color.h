@@ -1,8 +1,8 @@
 #ifndef COLOR_H
 #define COLOR_H
 
+#include <fstream>
 #include "vec3.h"
-#include <iostream>
 
 // Can initialise a vec3 with color keyword
 using color = vec3;
