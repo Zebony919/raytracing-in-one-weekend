@@ -24,6 +24,9 @@
     <ClInclude Include="C:\Users\Playtech\Documents\Visual Studio Projects\raytracing-in-one-weekend\src\InOneWeekend\rtweekend.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\Playtech\Documents\Visual Studio Projects\raytracing-in-one-weekend\src\InOneWeekend\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\Playtech\Documents\Visual Studio Projects\raytracing-in-one-weekend\CMakeLists.txt" />
