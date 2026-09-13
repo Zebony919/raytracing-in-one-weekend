@@ -34,6 +34,7 @@ class camera {
                     }
 
                     write_color(out, pixel_sample_scale * pixel_color);
+                    
 
                     /*
                     auto pixel_center = pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
@@ -102,7 +103,16 @@ class camera {
             hit_record rec;
             
             if (world.hit(r, interval(0, infinity), rec)) {
-                return 0.5 * (rec.normal + color(1, 1, 1));
+                vec3 direction = random_on_hemisphere(rec.normal);
+                
+                // This custom version acts as if the object obsorbs non-red colors more leaving the final object as having a red color
+                vec3 current_color = ray_color(ray(rec.p, direction), world);
+                vec3 altered_color = color(current_color.x() * 0.7, current_color.y() * 0.5, current_color.z() * 0.5);
+                return altered_color;
+
+                // return 0.5 * ray_color(ray(rec.p, direction), world);
+
+                // return 0.5 * (rec.normal + color(1, 1, 1));
             }
             
 
