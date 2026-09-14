@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\Users\Playtech\Documents\Visual Studio Projects\raytracing-in-one-weekend\build\CMakeFiles\fc46cd2626a1a908b632827411c04a2f\generate.stamp.rule">
+    <CustomBuild Include="C:\Users\zebon\VSCODE\raytracing-in-one-weekend\build\CMakeFiles\6b5f3b9768b3355e659f1b77fcbe9ca1\generate.stamp.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{641B9829-4BEA-3C7C-B8AE-8B7D53C7F35B}</UniqueIdentifier>
+      <UniqueIdentifier>{C8943949-EA54-3F3B-9BB1-A7FADBC2113D}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -3,11 +3,16 @@
 
 #include "rtweekend.h"
 
+class material;
+// Telling the compiler we will define material later in the material.h file but still allows 
+// us to reference it in hit_record
+
 // Data container for specific values at the point of intersections between a ray and a hittable object
 class hit_record {
     public:
         point3 p;
         vec3 normal;
+        shared_ptr<material> mat;
         double t;
         bool front_face;
 

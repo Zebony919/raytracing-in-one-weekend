@@ -3,12 +3,14 @@
 
 #include <fstream>
 #include "hittable.h"
+#include "material.h"
 
 class camera {
     public:
         double aspect_ratio = 1.0;
         int image_width = 100;
         int sample_per_pixel = 10;
+        int max_depth = 10;
 
         void render(const hittable& world) {
             initialize();
@@ -30,7 +32,7 @@ class camera {
                     
                     for (int sample = 0; sample < sample_per_pixel; sample++) {
                         ray r = get_ray(i, j);
-                        pixel_color += ray_color(r, world);
+                        pixel_color += ray_color(r, max_depth, world);
                     }
 
                     write_color(out, pixel_sample_scale * pixel_color);
@@ -99,16 +101,28 @@ class camera {
             return vec3(random_double() - 0.5, random_double() - 0.5, 0.0);
         }
         
-        color ray_color(ray& r, const hittable& world) {
+        color ray_color(ray& r, int depth, const hittable& world) {
+            if (depth <= 0) {
+                return color(0, 0, 0);
+            }
+
             hit_record rec;
             
             if (world.hit(r, interval(0, infinity), rec)) {
-                vec3 direction = random_on_hemisphere(rec.normal);
+                ray scattered;
+                color attenuation;
+
+                if (rec.mat -> scatter(r, rec, attenuation, scattered)) {
+                    return attenuation * ray_color(scattered, depth - 1, world);
+                }
                 
+                /* No material applied, just every object having the same surface texture and color
                 // This custom version acts as if the object obsorbs non-red colors more leaving the final object as having a red color
+                vec3 direction = random_on_hemisphere(rec.normal);
                 vec3 current_color = ray_color(ray(rec.p, direction), world);
                 vec3 altered_color = color(current_color.x() * 0.7, current_color.y() * 0.5, current_color.z() * 0.5);
                 return altered_color;
+                */
 
                 // return 0.5 * ray_color(ray(rec.p, direction), world);
 
