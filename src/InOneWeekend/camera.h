@@ -22,7 +22,6 @@ class camera {
 
             out << "P3\n" << image_width << ' ' <<  image_height << "\n255\n";
 
-            // Learn the anti-aliasing change
             for (int j = 0; j < image_height; j++) {
                 // Progress update for rendering
                 std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
@@ -86,7 +85,6 @@ class camera {
             pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
         }
 
-        // Learn this
         ray get_ray(int i, int j) const {
             auto offset = sample_square();
             auto pixel_sample = pixel00_loc + ((i + offset.x()) * pixel_delta_u) + ((j + offset.y()) * pixel_delta_v);
@@ -127,6 +125,8 @@ class camera {
                 // return 0.5 * ray_color(ray(rec.p, direction), world);
 
                 // return 0.5 * (rec.normal + color(1, 1, 1));
+
+                return color(0, 0, 0);
             }
             
 
