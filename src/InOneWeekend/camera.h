@@ -106,7 +106,7 @@ class camera {
 
             hit_record rec;
             
-            if (world.hit(r, interval(0, infinity), rec)) {
+            if (world.hit(r, interval(0.001, infinity), rec)) {
                 ray scattered;
                 color attenuation;
 
