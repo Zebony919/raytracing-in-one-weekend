@@ -12,6 +12,11 @@ class camera {
         int sample_per_pixel = 10;
         int max_depth = 10;
 
+        double vfov = 90;
+        point3 lookfrom = point3(0, 0, 0);
+        point3 lookat = point3(0, 0, -1);
+        vec3 vup = vec3(0, 1, 0);
+
         void render(const hittable& world) {
             initialize();
 
@@ -59,6 +64,7 @@ class camera {
         point3 pixel00_loc;
         vec3 pixel_delta_u;
         vec3 pixel_delta_v;
+        vec3 u, v, w;
 
         void initialize() {
             image_height = int(image_width / aspect_ratio);
@@ -66,22 +72,34 @@ class camera {
 
             pixel_sample_scale = 1.0 / sample_per_pixel;
 
-            camera_center = point3(0, 0, 0);
+            camera_center = lookfrom;
 
-            const auto focal_length = 1.0;
-            const auto viewport_height = 2.0;
+            // Viewport dimensions
+            const auto focal_length = (lookfrom - lookat).length();
+
+            auto theta = degrees_to_radians(vfov);
+            auto h = std::tan(theta/2);
+            const auto viewport_height = 2 * h * focal_length;
+
             const auto viewport_width = viewport_height * (double(image_width) / image_height);
 
+            // Calculate vector basis for camera coordinate frame
+            w = unit_vector(lookfrom - lookat);
+            u = unit_vector(cross(vup, w));
+            v = cross(w, u);
+
             // Calculate horizontal and down vectors on the vertical viewport edges
-            const auto viewport_u = vec3(viewport_width, 0, 0);
-            const auto viewport_v = vec3(0, -viewport_height, 0);
+            const auto viewport_u = viewport_width * u;
+            const auto viewport_v = viewport_height * -v;
 
             // Calculate horizontal and down delta vectors, pixel to pixel
             pixel_delta_u = viewport_u / image_width;
             pixel_delta_v = viewport_v / image_height;
 
             // Find location of upper left pixel
-            const auto viewport_upper_left = camera_center - vec3(0, 0, focal_length) - (viewport_u / 2) - (viewport_v / 2);
+            // const auto viewport_upper_left = camera_center - vec3(0, 0, focal_length) - (viewport_u / 2) - (viewport_v / 2);
+
+            const auto viewport_upper_left = camera_center - (focal_length * w) - viewport_u/2 - viewport_v/2;
             pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
         }
 
